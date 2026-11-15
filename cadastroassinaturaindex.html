@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="cadastroassinatura.css">
+    <title>Assinatura - Menu Sweet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="pagina">
+
+        <header class="topo">
+            <a href="Cardapioindex.html" class="logo-pequena"><img src="logo1.png" alt="M.S"></a>
+
+            <a href="#" class="topo-nome">Seu Nome</a>
+            <a href="Perfilindex.html" class="topo-perfil"><img src="perfil.png" alt="Perfil"></a>
+        </header>
+
+        <main class="conteudo">
+
+            <div class="cartao"></div>
+            <div class="divisor"></div>
+
+            <p class="preco">100R$/Mês</p>
+            <img src="qrcode.png" alt="QR Code" class="qrcode">
+            <p class="ou">OU</p>
+            <a href="#" class="admin">ADMIN →</a>
+
+            <form action="#" method="post" class="form-assinatura">
+
+                <label for="senha" class="rotulo">SENHA:</label>
+                <input type="password" id="senha" name="senha" class="campo" autocomplete="current-password">
+
+                <label for="cep" class="rotulo">CEP:</label>
+                <input type="text" id="cep" name="cep" class="campo" autocomplete="postal-code" required>
+
+                <label for="num" class="rotulo">NUM:</label>
+                <input type="text" id="num" name="num" class="campo" required>
+
+                <label for="rua" class="rotulo">RUA:</label>
+                <input type="text" id="rua" name="rua" class="campo" autocomplete="address-line1" required>
+
+                <label for="apt" class="rotulo">APT:</label>
+                <input type="text" id="apt" name="apt" class="campo">
+
+                <label for="bairro" class="rotulo">BAIRRO:</label>
+                <input type="text" id="bairro" name="bairro" class="campo" required>
+
+                <label for="complemento" class="rotulo">Complemento</label>
+                <input type="text" id="complemento" name="complemento" class="campo">
+
+                <button type="submit" class="btn-cadastrar">CADASTRAR</button>
+
+            </form>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

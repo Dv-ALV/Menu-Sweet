@@ -1,0 +1,357 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --fundo: #F8F9FA;
+    --card: #FFFFFF;
+    --titulo: #1E2230;
+    --azul: #3A60D0;
+    --rosa: #FF59AE;
+}
+
+:root[data-tema="escuro"]{
+    --fundo: #121625;
+    --card: #1B2238;
+    --titulo: #F9F8FA;
+    --azul: #4B72E8;
+}
+
+body{
+    background-color: var(--fundo);
+    color: var(--titulo);
+    font-family: "Quicksand", sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+a{
+    text-decoration: none;
+}
+
+.logo-pequena img{
+    display: block;
+    height: auto;
+}
+
+.topo-nome{
+    color: var(--azul);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    white-space: nowrap;
+}
+
+.topo-perfil img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.cartao{
+    background-color: var(--card);
+    border: solid 2px var(--rosa);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.divisor{
+    background-color: var(--rosa);
+}
+
+.preco,
+.ou{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.admin{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+    transition: transform 0.3s ease-in-out;
+}
+
+.admin:hover{
+    transform: translateX(14px);
+}
+
+.rotulo{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.campo{
+    padding: 0 14px;
+    background-color: var(--card);
+    border: solid 1px var(--rosa);
+    border-radius: 13px;
+    outline: none;
+    color: var(--azul);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.campo:focus{
+    border-color: var(--azul);
+}
+
+.btn-cadastrar{
+    width: 140px;
+    height: 32px;
+    padding: 0 0 2px;
+    background: none;
+    border: none;
+    color: var(--rosa);
+    font-family: "Quicksand", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-cadastrar::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: height 0.3s ease-in-out;
+}
+
+.btn-cadastrar:hover{
+    transform: scale(1.12);
+}
+
+.btn-cadastrar:hover::after{
+    height: 3px;
+}
+
+@media (min-width: 1025px){
+    .pagina{
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+    }
+
+    .topo,
+    .conteudo{
+        display: contents;
+    }
+
+    .logo-pequena{
+        position: absolute;
+        left: 249px;
+        top: -6px;
+    }
+
+    .logo-pequena img{
+        width: 149px;
+    }
+
+    .topo-nome{
+        position: absolute;
+        left: 1572px;
+        top: 57px;
+    }
+
+    .topo-perfil{
+        position: absolute;
+        left: 1729px;
+        top: 26px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .cartao{
+        position: absolute;
+        left: 461px;
+        top: 169px;
+        width: 998px;
+        height: 741px;
+        border-radius: 32px;
+    }
+
+    .divisor{
+        position: absolute;
+        left: 947px;
+        top: 207px;
+        width: 1px;
+        height: 561px;
+    }
+
+    .preco,
+    .ou{
+        position: absolute;
+        left: 506px;
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .preco{
+        top: 195px;
+    }
+
+    .qrcode{
+        position: absolute;
+        left: 510px;
+        top: 253px;
+        width: 168px;
+        height: auto;
+    }
+
+    .ou{
+        top: 437px;
+    }
+
+    .admin{
+        position: absolute;
+        left: 506px;
+        top: 505px;
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .rotulo,
+    .campo,
+    .btn-cadastrar{
+        position: absolute;
+    }
+
+    .rotulo{
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .campo{
+        height: 43px;
+        font-size: 22px;
+    }
+
+    label[for="senha"]{ left: 506px; top: 566px; }
+    #senha{ left: 506px; top: 628px; width: 236px; }
+
+    label[for="cep"]{ left: 1033px; top: 195px; }
+    label[for="num"]{ left: 1301px; top: 195px; }
+    label[for="rua"]{ left: 1033px; top: 309px; }
+    label[for="apt"]{ left: 1301px; top: 309px; }
+    label[for="bairro"]{ left: 1033px; top: 438px; }
+    label[for="complemento"]{ left: 1033px; top: 567px; }
+
+    #cep{ left: 1033px; top: 243px; width: 236px; }
+    #num{ left: 1301px; top: 243px; width: 88px; }
+    #rua{ left: 1033px; top: 358px; width: 236px; }
+    #apt{ left: 1301px; top: 358px; width: 88px; }
+    #bairro{ left: 1033px; top: 500px; width: 236px; }
+    #complemento{ left: 1033px; top: 628px; width: 236px; }
+
+    .btn-cadastrar{
+        left: 877px;
+        top: 842px;
+    }
+}
+
+@media (max-width: 1024px){
+    .pagina{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        padding: 16px 16px 40px;
+    }
+
+    .topo{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+
+    .logo-pequena{
+        margin-right: auto;
+    }
+
+    .logo-pequena img{
+        width: 92px;
+        margin: -24px 0 -24px -4px;
+    }
+
+    .topo-nome{
+        font-size: 16px;
+    }
+
+    .topo-perfil{
+        width: 38px;
+        height: 38px;
+    }
+
+    .conteudo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 18px 30px;
+        background-color: var(--card);
+        border: solid 2px var(--rosa);
+        border-radius: 24px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .cartao,
+    .divisor{
+        display: none;
+    }
+
+    .preco,
+    .ou{
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    .qrcode{
+        width: 160px;
+        height: auto;
+        margin: 12px 0;
+    }
+
+    .admin{
+        position: relative;
+        margin: 6px 0 12px;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .form-assinatura{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .rotulo{
+        margin-top: 14px;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .campo{
+        width: 100%;
+        height: 46px;
+        font-size: 18px;
+    }
+
+    .btn-cadastrar{
+        position: relative;
+        align-self: center;
+        margin-top: 26px;
+    }
+}

@@ -1,0 +1,51 @@
+{
+  "conexao": {
+    "servidor": "localhost",
+    "porta": "3306",
+    "usuario": "root",
+    "senha": "",
+    "banco": "menusweet"
+  },
+  "importar": true,
+  "dados": {
+    "Categorias": [
+      { "id": 1, "nome_categoria": "Café", "descricao": "Bebidas à base de café especial" },
+      { "id": 2, "nome_categoria": "Doce", "descricao": "Doceria artesanal e bentô cakes" },
+      { "id": 3, "nome_categoria": "Bebidas", "descricao": "Sodas, milkshakes e refrescos" },
+      { "id": 4, "nome_categoria": "Salgados", "descricao": "Salgados rústicos e croissants" }
+    ],
+    "Produtos": [
+      { "id": 1, "idCategoria": 1, "nome_produto": "Expresso da casa", "descricao": "Café especial", "preco": 10.00 },
+      { "id": 2, "idCategoria": 1, "nome_produto": "Latte da Biblioteca", "descricao": "Latte cremoso", "preco": 12.00 },
+      { "id": 3, "idCategoria": 2, "nome_produto": "Bolo de Morango", "descricao": "Fatia de bolo fresco", "preco": 12.00 },
+      { "id": 4, "idCategoria": 4, "nome_produto": "Croissant Premium", "descricao": "Croissant amanteigado", "preco": 12.00 },
+      { "id": 5, "idCategoria": 1, "nome_produto": "Cappuccino Clássico", "descricao": "Cappuccino tradicional", "preco": 10.00 },
+      { "id": 6, "idCategoria": 1, "nome_produto": "Mocha de Chocolate Meio Amargo", "descricao": "Café com chocolate meio amargo", "preco": 12.00 },
+      { "id": 7, "idCategoria": 1, "nome_produto": "Macchiato Aveludado", "descricao": "Macchiato com espuma aveludada", "preco": 13.00 },
+      { "id": 8, "idCategoria": 2, "nome_produto": "Bentô Cake", "descricao": "Bolo individual decorado", "preco": 10.00 },
+      { "id": 9, "idCategoria": 2, "nome_produto": "Picole de Sea Salt", "descricao": "Picolé cremoso de sea salt", "preco": 10.00 },
+      { "id": 10, "idCategoria": 2, "nome_produto": "Tartlet de Frutas Vermelhas", "descricao": "Tortinha com frutas vermelhas", "preco": 12.00 },
+      { "id": 11, "idCategoria": 3, "nome_produto": "Italian Cream de Maçã Verde", "descricao": "Soda italiana cremosa", "preco": 10.00 },
+      { "id": 12, "idCategoria": 3, "nome_produto": "Milkshake Estelar de Baunilha", "descricao": "Milkshake de baunilha", "preco": 12.00 },
+      { "id": 13, "idCategoria": 3, "nome_produto": "Frapê de Frutas Silvestres", "descricao": "Frapê gelado de frutas silvestres", "preco": 10.00 },
+      { "id": 14, "idCategoria": 3, "nome_produto": "Soda de Lichia", "descricao": "Soda sabor lichia", "preco": 12.00 },
+      { "id": 15, "idCategoria": 3, "nome_produto": "Energetico", "descricao": "Energético em lata", "preco": 10.00 },
+      { "id": 16, "idCategoria": 3, "nome_produto": "Suco Lata", "descricao": "Suco em lata", "preco": 12.00 },
+      { "id": 17, "idCategoria": 3, "nome_produto": "Refrigerante", "descricao": "Refrigerante em lata", "preco": 10.00 },
+      { "id": 18, "idCategoria": 3, "nome_produto": "Agua", "descricao": "Água mineral", "preco": 12.00 },
+      { "id": 19, "idCategoria": 4, "nome_produto": "O Sanduíche de Frango", "descricao": "Sanduíche de frango desfiado", "preco": 10.00 },
+      { "id": 20, "idCategoria": 4, "nome_produto": "Quiche Rústica", "descricao": "Quiche artesanal", "preco": 15.00 },
+      { "id": 21, "idCategoria": 4, "nome_produto": "Empadinha Cremosa de Palmito", "descricao": "Empadinha de palmito", "preco": 14.00 },
+      { "id": 22, "idCategoria": 4, "nome_produto": "Toast de Abacate e Ovo Pochê", "descricao": "Torrada com abacate e ovo pochê", "preco": 20.00 }
+    ],
+    "KIT": [
+      { "id": 1, "nome_kit": "Kit Encontro na Biblioteca", "descricao_kit": "Kit temático", "preco_kit": 50.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 2, "nome_kit": "Kit Síndrome da Adolescência", "descricao_kit": "Kit temático", "preco_kit": 55.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 3, "nome_kit": "Kit O Banquete do Cozinheiro", "descricao_kit": "Kit temático", "preco_kit": 55.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 4, "nome_kit": "Kit Flores e Aromas de Chidori", "descricao_kit": "Kit temático", "preco_kit": 50.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 5, "nome_kit": "Kit Equivalência de Bolso", "descricao_kit": "Kit temático", "preco_kit": 52.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 6, "nome_kit": "Kit Manhã na Cidade", "descricao_kit": "Kit temático", "preco_kit": 60.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" },
+      { "id": 7, "nome_kit": "Kit Pôr do Sol na Torre do Relógio", "descricao_kit": "Kit temático", "preco_kit": 50.00, "percentual_desconto": 0, "imagem_kit": "fotocafe.png" }
+    ]
+  }
+}

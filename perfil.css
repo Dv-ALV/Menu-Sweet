@@ -1,0 +1,380 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --fundo: #F8F9FA;
+    --card: #FFFFFF;
+    --titulo: #1E2230;
+    --azul: #3A60D0;
+    --rosa: #FF59AE;
+}
+
+:root[data-tema="escuro"]{
+    --fundo: #121625;
+    --card: #1B2238;
+    --titulo: #F9F8FA;
+    --azul: #4B72E8;
+}
+
+body{
+    background-color: var(--fundo);
+    color: var(--titulo);
+    font-family: "Quicksand", sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+a{
+    text-decoration: none;
+}
+
+.logo-pequena img{
+    display: block;
+    height: auto;
+}
+
+.topo-nome{
+    color: var(--azul);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    white-space: nowrap;
+}
+
+.topo-perfil img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.painel-pedidos{
+    background-color: var(--card);
+    border: solid 2px var(--azul);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.pedidos-nome,
+.pedidos-titulo{
+    color: var(--azul);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.painel-endereco{
+    background-color: var(--card);
+    border: solid 2px var(--rosa);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.rotulo{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.campo{
+    padding: 0 14px;
+    background-color: var(--card);
+    border: solid 1px var(--rosa);
+    border-radius: 13px;
+    outline: none;
+    color: var(--azul);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.campo:focus{
+    border-color: var(--azul);
+}
+
+.btn-confirmar{
+    width: 140px;
+    height: 32px;
+    padding: 0 0 2px;
+    background: none;
+    border: none;
+    color: var(--rosa);
+    font-family: "Quicksand", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-confirmar::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: height 0.3s ease-in-out;
+}
+
+.btn-confirmar:hover{
+    transform: scale(1.12);
+}
+
+.btn-confirmar:hover::after{
+    height: 3px;
+}
+
+.pedido-card{
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border: solid 1px var(--azul);
+    border-radius: 14px;
+}
+
+.pedido-card-titulo,
+.pedido-card-total{
+    color: var(--rosa);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.pedido-card-linha{
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--azul);
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.pedido-card .linha-nome{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pedido-card .linha-preco{
+    white-space: nowrap;
+}
+
+.pedido-vazio{
+    color: var(--azul);
+    font-size: 16px;
+}
+
+@media (min-width: 1025px){
+    .pedidos-lista{
+    position: absolute;
+    left: 390px;
+    top: 300px;
+    width: 462px;
+    height: 595px;
+    overflow-y: auto;
+    }
+
+    .pagina{
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+    }
+
+    .topo,
+    .bloco-pedidos,
+    .bloco-endereco{
+        display: contents;
+    }
+
+    .logo-pequena{
+        position: absolute;
+        left: 249px;
+        top: -6px;
+    }
+
+    .logo-pequena img{
+        width: 149px;
+    }
+
+    .topo-nome{
+        position: absolute;
+        left: 1572px;
+        top: 57px;
+    }
+
+    .topo-perfil{
+        position: absolute;
+        left: 1729px;
+        top: 26px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .painel-pedidos{
+        position: absolute;
+        left: 379px;
+        top: 169px;
+        width: 484px;
+        height: 741px;
+        border-radius: 24px;
+    }
+
+    .pedidos-nome,
+    .pedidos-titulo{
+        position: absolute;
+        left: 390px;
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .pedidos-nome{
+        top: 194px;
+    }
+
+    .pedidos-titulo{
+        top: 248px;
+    }
+
+    .painel-endereco{
+        position: absolute;
+        left: 1074px;
+        top: 169px;
+        width: 484px;
+        height: 741px;
+        border-radius: 24px;
+    }
+
+    .rotulo,
+    .campo,
+    .btn-confirmar{
+        position: absolute;
+    }
+
+    .rotulo{
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .campo{
+        height: 43px;
+        font-size: 22px;
+    }
+
+    label[for="cep"]{ left: 1133px; top: 195px; }
+    label[for="num"]{ left: 1401px; top: 195px; }
+    label[for="rua"]{ left: 1133px; top: 311px; }
+    label[for="apt"]{ left: 1401px; top: 311px; }
+    label[for="bairro"]{ left: 1133px; top: 438px; }
+    label[for="complemento"]{ left: 1133px; top: 566px; }
+
+    #cep{ left: 1133px; top: 243px; width: 236px; }
+    #num{ left: 1401px; top: 243px; width: 88px; }
+    #rua{ left: 1133px; top: 358px; width: 236px; }
+    #apt{ left: 1401px; top: 358px; width: 88px; }
+    #bairro{ left: 1133px; top: 500px; width: 236px; }
+    #complemento{ left: 1133px; top: 630px; width: 236px; }
+
+    .btn-confirmar{
+        left: 1129px;
+        top: 832px;
+    }
+}
+
+@media (max-width: 1024px){
+    .pedidos-lista{
+    margin-top: 12px;
+    }
+
+    .pagina{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        min-height: 100vh;
+        padding: 16px 16px 40px;
+    }
+
+    .topo{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 4px;
+    }
+
+    .logo-pequena{
+        margin-right: auto;
+    }
+
+    .logo-pequena img{
+        width: 92px;
+        margin: -24px 0 -24px -4px;
+    }
+
+    .topo-nome{
+        font-size: 16px;
+    }
+
+    .topo-perfil{
+        width: 38px;
+        height: 38px;
+    }
+
+    .bloco-pedidos{
+        min-height: 220px;
+        padding: 22px 20px;
+        background-color: var(--card);
+        border: solid 2px var(--azul);
+        border-radius: 22px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .painel-pedidos,
+    .painel-endereco{
+        display: none;
+    }
+
+    .pedidos-nome,
+    .pedidos-titulo{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .pedidos-titulo{
+        margin-top: 10px;
+    }
+
+    .bloco-endereco{
+        padding: 10px 20px 28px;
+        background-color: var(--card);
+        border: solid 2px var(--rosa);
+        border-radius: 22px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .form-endereco{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rotulo{
+        margin-top: 14px;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .campo{
+        width: 100%;
+        height: 46px;
+        font-size: 18px;
+    }
+
+    .btn-confirmar{
+        position: relative;
+        align-self: center;
+        margin-top: 26px;
+    }
+}

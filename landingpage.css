@@ -1,0 +1,814 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --fundo: #F8F9FA;
+    --card: #FFFFFF;
+    --titulo: #1E2230;
+    --azul: #3A60D0;
+    --rosa: #FF59AE;
+    --glow: rgba(255, 89, 174, 0.4);
+    --linha-fraca: rgba(58, 96, 208, 0.15);
+}
+
+:root[data-tema="escuro"]{
+    --fundo: #121625;
+    --card: #1B2238;
+    --titulo: #F9F8FA;
+    --azul: #4B72E8;
+    --linha-fraca: rgba(75, 114, 232, 0.15);
+}
+
+html{
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
+}
+
+body{
+    background-color: var(--fundo);
+    color: var(--titulo);
+    font-family: "Quicksand", sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+a{
+    text-decoration: none;
+}
+
+.topo{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--fundo);
+    z-index: 100;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.linha-header,
+.divisoria,
+.info::before,
+.info::after{
+    height: 2px;
+    background: linear-gradient(to right, var(--linha-fraca), var(--azul) 50%, var(--linha-fraca));
+    clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 60%, 50% 100%, 0 60%);
+}
+
+.linha-vertical{
+    width: 2px;
+    background: linear-gradient(to bottom, var(--linha-fraca), var(--azul) 50%, var(--linha-fraca));
+    clip-path: polygon(40% 0, 60% 0, 100% 50%, 60% 100%, 40% 100%, 0 50%);
+    z-index: 3;
+}
+
+.menu-link{
+    color: var(--azul);
+    font-weight: 500;
+    line-height: 30px;
+    white-space: nowrap;
+    transition: color 0.3s ease-in-out;
+}
+
+.menu-link::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-link.ativo::after,
+.menu-link:hover::after{
+    transform: scaleX(1);
+}
+
+.menu-link:hover{
+    color: var(--rosa);
+}
+
+.btn-modo{
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-modo img{
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.icone-sol,
+.icone-lua{
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mini-sol,
+.mini-lua{
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.icone-lua{
+    opacity: 0;
+}
+
+.btn-modo:hover .icone-sol,
+.btn-modo:hover .icone-lua{
+    transform: translateY(-5px);
+}
+
+.btn-modo:hover .mini-lua{
+    opacity: 1;
+    transform: translateY(-5px) scale(1);
+}
+
+:root[data-tema="escuro"] .icone-sol{
+    opacity: 0;
+}
+
+:root[data-tema="escuro"] .icone-lua{
+    opacity: 1;
+}
+
+:root[data-tema="escuro"] .btn-modo:hover .mini-lua{
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+:root[data-tema="escuro"] .btn-modo:hover .mini-sol{
+    opacity: 1;
+    transform: translateY(-5px) scale(1);
+}
+
+.link-azul,
+.link-rosa{
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 30px;
+    white-space: nowrap;
+    padding-bottom: 2px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.link-azul{
+    color: var(--azul);
+}
+
+.link-rosa{
+    color: var(--rosa);
+}
+
+.link-azul::after,
+.link-rosa::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: height 0.3s ease-in-out;
+}
+
+.link-azul:hover,
+.link-rosa:hover{
+    transform: translateX(14px);
+}
+
+.link-rosa.link-expande:hover{
+    transform: scale(1.12);
+}
+
+.link-rosa.link-expande:hover::after{
+    height: 3px;
+}
+
+.lateral{
+    white-space: nowrap;
+    color: var(--azul);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.logo-grande{
+    pointer-events: none;
+}
+
+.foto-cafe,
+.foto-espaco{
+    object-fit: cover;
+    border: solid 2px var(--azul);
+}
+
+.info{
+    background-color: var(--card);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.info::before,
+.info::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+
+.info::before{
+    top: -1px;
+}
+
+.info::after{
+    bottom: -1px;
+}
+
+.info-item{
+    text-align: center;
+}
+
+.info-caixa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-icone{
+    display: block;
+    height: auto;
+}
+
+.info-texto{
+    color: var(--azul);
+    font-weight: 500;
+}
+
+.titulo-img{
+    line-height: 0;
+}
+
+.titulo-img img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.alguns{
+    color: var(--azul);
+    font-weight: 500;
+    line-height: 30px;
+    white-space: nowrap;
+}
+
+.card-produto{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: var(--card);
+    border: solid 2px var(--rosa);
+    border-radius: 30px;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.card-produto:hover{
+    box-shadow: 0 0 24px var(--glow);
+    transform: translateY(-6px);
+}
+
+.card-produto:active{
+    transform: translateY(-2px);
+}
+
+.card-produto:focus-visible{
+    outline: 2px solid var(--azul);
+    outline-offset: 3px;
+}
+
+.produto-foto{
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.produto-texto{
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-nome,
+.produto-preco{
+    color: var(--azul);
+    font-size: 24px;
+    line-height: 30px;
+    transition: color 0.3s ease-in-out;
+}
+
+.produto-nome{
+    font-weight: 500;
+}
+
+.produto-preco{
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.card-produto:hover .produto-nome,
+.card-produto:hover .produto-preco{
+    color: var(--rosa);
+}
+
+.seta{
+    color: var(--rosa);
+    font-size: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.cardapio-completo{
+    text-align: center;
+    font-weight: 400;
+}
+
+.sobre-destaque{
+    color: var(--rosa);
+    font-weight: 400;
+    text-align: center;
+}
+
+.sobre-boas,
+.sobre-descricao{
+    color: var(--azul);
+    font-weight: 500;
+}
+
+@media (min-width: 1025px){
+    .pagina{
+        position: relative;
+        width: 1920px;
+        height: 2400px;
+        margin: 0 auto;
+    }
+
+    .pagina > *{
+        position: absolute;
+    }
+
+    .linha-header{
+        left: 98px;
+        top: 106px;
+        width: 1722px;
+    }
+
+    .linha-vertical{
+        left: 97px;
+        top: 137px;
+        height: 2098px;
+    }
+
+    .divisoria{
+        left: 206px;
+        top: 1806px;
+        width: 1508px;
+    }
+
+    .topo{
+        height: 110px;
+    }
+
+    .topo-interno{
+        position: relative;
+        width: 1920px;
+        height: 110px;
+        margin: 0 auto;
+    }
+
+    .topo-interno > *{
+        position: absolute;
+    }
+
+    .logo-pequena{
+        left: 247px;
+        top: -14px;
+    }
+
+    .logo-pequena img{
+        display: block;
+        width: 149px;
+        height: auto;
+    }
+
+    .menu-link{
+        top: 42px;
+        font-size: 24px;
+    }
+
+    .menu-inicio{ left: 725px; }
+    .menu-cardapio{ left: 839px; }
+    .menu-sobre{ left: 995px; }
+
+    .btn-modo{
+        left: 1179px;
+        top: 39px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .topo-loja{
+        left: 1483px;
+        top: 42px;
+        font-size: 24px;
+    }
+
+    .lateral{
+        transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    .lat-desde{
+        left: 50px;
+        top: 418px;
+    }
+
+    .lat-cafe{
+        left: 50px;
+        top: 1153px;
+    }
+
+    .lat-cozinha{
+        left: 50px;
+        top: 2029px;
+    }
+
+    .logo-grande{
+        left: 193px;
+        top: -4px;
+        width: 786px;
+        height: auto;
+    }
+
+    .hero-cardapio{
+        left: 245px;
+        top: 684px;
+    }
+
+    .hero-loja{
+        left: 245px;
+        top: 746px;
+    }
+
+    .foto-cafe{
+        left: 1123px;
+        top: 136px;
+        width: 552px;
+        height: 650px;
+        border-radius: 28px;
+    }
+
+    .info{
+        left: 98px;
+        top: 853px;
+        width: 1822px;
+        height: 195px;
+    }
+
+    .info-item{
+        position: absolute;
+        top: 32px;
+        width: 600px;
+    }
+
+    .item-moto{ left: 66px; }
+    .item-casa{ left: 590px; }
+    .item-calen{ left: 1152px; }
+
+    .info-caixa{
+        height: 80px;
+    }
+
+    .icone-moto{ width: 95px; transform: translateX(-20px); }
+    .icone-casa{ width: 62px; transform: translateX(6px); }
+    .icone-calen{ width: 58px; transform: translateX(16px); }
+
+    .info-texto{
+        margin-top: 7px;
+        font-size: 24px;
+        line-height: 30px;
+        white-space: nowrap;
+    }
+
+    .titulo-cardapio{
+        left: 150px;
+        top: 1131px;
+        width: 382px;
+        transform: translateY(-50%);
+    }
+
+    .alguns{
+        left: 161px;
+        top: 1200px;
+        font-size: 26px;
+    }
+
+    .card-produto{
+        top: 1262px;
+        width: 373px;
+        height: 443px;
+    }
+
+    .c1{ left: 193px; }
+    .c2{ left: 777px; }
+    .c3{ left: 1361px; }
+
+    .seta{
+        top: 1468px;
+    }
+
+    .seta-esq{ left: 120px; }
+    .seta-dir{ left: 1769px; }
+
+    .cardapio-completo{
+        left: 788px;
+        top: 1737px;
+        width: 340px;
+        height: 40px;
+        padding: 0 0 4px;
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    .foto-espaco{
+        left: 193px;
+        top: 1861px;
+        width: 606px;
+        height: 406px;
+        border-radius: 30px;
+    }
+
+    .titulo-sobre{
+        right: 151px;
+        top: 1865px;
+        width: 380px;
+        transform: translateY(-50%);
+    }
+
+    .sobre-destaque{
+        left: 828px;
+        top: 1923px;
+        width: 940px;
+        font-size: 28px;
+        line-height: 35px;
+    }
+
+    .sobre-boas{
+        left: 825px;
+        top: 2028px;
+        width: 945px;
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .sobre-descricao{
+        left: 825px;
+        top: 2075px;
+        width: 945px;
+        font-size: 24px;
+        line-height: 30px;
+        text-align: justify;
+    }
+}
+
+@media (max-width: 1024px){
+    html{
+        scroll-padding-top: 100px;
+    }
+
+    .topo{
+        padding: 6px 16px 8px;
+    }
+
+    .topo-interno{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: 14px;
+        row-gap: 2px;
+    }
+
+    .linha-header,
+    .linha-vertical,
+    .lateral,
+    .seta{
+        display: none;
+    }
+
+    .logo-pequena{
+        flex: 1 1 calc(100% - 60px);
+    }
+
+    .logo-pequena img{
+        display: block;
+        width: 92px;
+        height: auto;
+        margin: -24px 0 -24px -4px;
+    }
+
+    .btn-modo{
+        position: relative;
+        width: 38px;
+        height: 38px;
+    }
+
+    .mini-sol,
+    .mini-lua{
+        top: -6px;
+        right: -6px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .menu-link{
+        position: relative;
+        font-size: 14px;
+    }
+
+    .topo-loja{
+        position: relative;
+        margin-left: auto;
+        font-size: 13px;
+    }
+
+    .pagina{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 100px 20px 40px;
+    }
+
+    .logo-grande{
+        order: -4;
+        display: block;
+        width: 100%;
+        max-width: 440px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .foto-cafe{
+        order: -3;
+        width: 100%;
+        height: 280px;
+        margin-top: 8px;
+        border-radius: 24px;
+    }
+
+    .hero-cardapio,
+    .hero-loja{
+        position: relative;
+        align-self: flex-start;
+        font-size: 22px;
+    }
+
+    .hero-cardapio{
+        order: -2;
+        margin-top: 20px;
+    }
+
+    .hero-loja{
+        order: -1;
+        margin-top: 14px;
+    }
+
+    .info{
+        position: relative;
+        margin: 32px -20px 0;
+        padding: 20px;
+    }
+
+    .info-item{
+        padding: 12px 0;
+    }
+
+    .info-caixa{
+        height: 64px;
+    }
+
+    .icone-moto{ width: 76px; }
+    .icone-casa{ width: 50px; }
+    .icone-calen{ width: 46px; }
+
+    .info-texto{
+        margin-top: 6px;
+        font-size: 17px;
+        line-height: 24px;
+    }
+
+    .titulo-cardapio{
+        width: min(70%, 300px);
+        margin: 36px 0 6px;
+    }
+
+    .alguns{
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+
+    .card-produto{
+        flex-direction: row;
+        gap: 12px;
+        width: 100%;
+        height: 150px;
+        padding: 12px;
+        margin-bottom: 16px;
+        border-radius: 24px;
+    }
+
+    .produto-foto{
+        order: 2;
+        flex: 0 0 118px;
+        width: 118px;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .produto-texto{
+        order: 1;
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 4px 0 4px 4px;
+        justify-content: space-between;
+    }
+
+    .produto-nome,
+    .produto-preco{
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .cardapio-completo{
+        position: relative;
+        align-self: center;
+        margin-top: 8px;
+        padding: 0 28px 4px;
+        font-size: 22px;
+    }
+
+    .divisoria{
+        width: 100%;
+        margin: 32px 0;
+    }
+
+    .foto-espaco{
+        width: 100%;
+        height: 240px;
+        border-radius: 24px;
+    }
+
+    .titulo-sobre{
+        align-self: center;
+        width: min(60%, 260px);
+        margin: 28px 0 10px;
+    }
+
+    .sobre-destaque{
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .sobre-boas{
+        margin-top: 20px;
+        font-size: 19px;
+        line-height: 28px;
+    }
+
+    .sobre-descricao{
+        margin-top: 10px;
+        font-size: 17px;
+        line-height: 26px;
+    }
+}

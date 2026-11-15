@@ -1,0 +1,581 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --fundo: #F8F9FA;
+    --card: #FFFFFF;
+    --titulo: #1E2230;
+    --azul: #3A60D0;
+    --rosa: #FF59AE;
+}
+
+:root[data-tema="escuro"]{
+    --fundo: #121625;
+    --card: #1B2238;
+    --titulo: #F9F8FA;
+    --azul: #4B72E8;
+}
+
+body{
+    background-color: var(--fundo);
+    color: var(--titulo);
+    font-family: "Quicksand", sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+a{
+    text-decoration: none;
+}
+
+.pagina[data-vista="cadastro"] .vista-entrar,
+.pagina[data-vista="entrar"] .vista-cadastro{
+    display: none;
+}
+
+.pagina .vista.saindo{
+    display: block;
+    pointer-events: none;
+}
+
+.vista.entra-esquerda{
+    animation: entra-esquerda 0.5s ease-in-out both;
+}
+
+.vista.entra-direita{
+    animation: entra-direita 0.5s ease-in-out both;
+}
+
+.vista.sai-esquerda{
+    animation: sai-esquerda 0.5s ease-in-out both;
+}
+
+.vista.sai-direita{
+    animation: sai-direita 0.5s ease-in-out both;
+}
+
+@keyframes entra-esquerda{
+    from{
+        transform: translateX(-1100px);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes entra-direita{
+    from{
+        transform: translateX(1100px);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes sai-esquerda{
+    from{
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateX(-1100px);
+        opacity: 0;
+    }
+}
+
+@keyframes sai-direita{
+    from{
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateX(1100px);
+        opacity: 0;
+    }
+}
+
+.logo-pequena img{
+    display: block;
+    height: auto;
+}
+
+.topo-link{
+    padding: 0 6px 2px;
+    font-weight: 400;
+    line-height: 30px;
+    white-space: nowrap;
+    transition: color 0.3s ease-in-out;
+}
+
+.topo-link::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.topo-link.ativo::after,
+.topo-link:hover::after{
+    transform: scaleX(1);
+}
+
+.link-entrar{
+    color: var(--azul);
+}
+
+.link-cadastro{
+    color: var(--rosa);
+}
+
+.link-entrar:hover{
+    color: var(--rosa);
+}
+
+.seta{
+    padding: 0;
+    background: none;
+    border: none;
+    font-family: "Quicksand", sans-serif;
+    font-size: 30px;
+    line-height: 36px;
+    cursor: pointer;
+}
+
+.seta-voltar{
+    color: var(--azul);
+}
+
+.seta-avancar{
+    color: var(--rosa);
+}
+
+.cartao{
+    background-color: var(--card);
+    border: solid 2px var(--rosa);
+    border-radius: 32px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.divisor{
+    background-color: var(--rosa);
+}
+
+.rotulo{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.campo{
+    padding: 0 14px;
+    background-color: var(--card);
+    border: solid 1px var(--rosa);
+    border-radius: 13px;
+    outline: none;
+    color: var(--azul);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.campo:focus{
+    border-color: var(--azul);
+}
+
+.dica{
+    color: var(--rosa);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.dica::before{
+    content: "•";
+    position: absolute;
+    left: 0;
+}
+
+.btn-cadastrar,
+.btn-entrar{
+    height: 32px;
+    padding: 0 0 2px;
+    background: none;
+    border: none;
+    font-family: "Quicksand", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-cadastrar{
+    width: 140px;
+    color: var(--rosa);
+}
+
+.btn-entrar{
+    width: 120px;
+    color: var(--azul);
+}
+
+.btn-cadastrar::after,
+.btn-entrar::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: height 0.3s ease-in-out;
+}
+
+.btn-cadastrar:hover,
+.btn-entrar:hover{
+    transform: scale(1.12);
+}
+
+.btn-cadastrar:hover::after,
+.btn-entrar:hover::after{
+    height: 3px;
+}
+
+.cartao-entrar{
+    border-color: var(--azul);
+}
+
+.entrar-rotulo{
+    color: var(--azul);
+    font-weight: 400;
+    text-align: center;
+}
+
+.entrar-campo{
+    padding: 0 14px;
+    background-color: var(--card);
+    border: solid 1px var(--azul);
+    border-radius: 13px;
+    outline: none;
+    color: var(--azul);
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.entrar-campo:focus{
+    border-color: var(--rosa);
+}
+
+@media (min-width: 1025px){
+    .pagina{
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        margin: 0 auto;
+    }
+
+    .vistas,
+    .topo{
+        display: contents;
+    }
+
+    .vista{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .logo-pequena{
+        position: absolute;
+        left: 249px;
+        top: -6px;
+    }
+
+    .logo-pequena img{
+        width: 149px;
+    }
+
+    .topo-link{
+        position: absolute;
+        top: 52px;
+        font-size: 24px;
+    }
+
+    .link-entrar{ left: 1414px; }
+    .link-cadastro{ left: 1538px; }
+
+    .seta{
+        position: absolute;
+        top: 520px;
+    }
+
+    .seta-voltar{ left: 43px; }
+    .seta-avancar{ left: 1761px; }
+
+    .cartao{
+        position: absolute;
+        left: 445px;
+        top: 169px;
+        width: 998px;
+        height: 741px;
+    }
+
+    .divisor{
+        position: absolute;
+        left: 920px;
+        top: 207px;
+        width: 1px;
+        height: 561px;
+    }
+
+    .rotulo,
+    .campo,
+    .dica,
+    .btn-cadastrar{
+        position: absolute;
+    }
+
+    .rotulo{
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .campo{
+        height: 43px;
+        font-size: 22px;
+    }
+
+    label[for="telefone"]{ left: 507px; top: 195px; }
+    label[for="nome"]{ left: 507px; top: 309px; }
+    label[for="email"]{ left: 507px; top: 438px; }
+    label[for="senha"]{ left: 507px; top: 567px; }
+
+    #telefone{ left: 511px; top: 243px; width: 237px; }
+    #nome{ left: 511px; top: 371px; width: 237px; }
+    #email{ left: 511px; top: 500px; width: 237px; }
+    #senha{ left: 506px; top: 628px; width: 237px; }
+
+    .dica-1{ top: 691px; }
+    .dica-2{ top: 734px; }
+
+    label[for="cep"]{ left: 1033px; top: 195px; }
+    label[for="num"]{ left: 1301px; top: 195px; }
+    label[for="rua"]{ left: 1033px; top: 309px; }
+    label[for="apt"]{ left: 1301px; top: 309px; }
+    label[for="bairro"]{ left: 1033px; top: 438px; }
+    label[for="complemento"]{ left: 1033px; top: 567px; }
+
+    #cep{ left: 1033px; top: 243px; width: 236px; }
+    #num{ left: 1301px; top: 243px; width: 88px; }
+    #rua{ left: 1033px; top: 358px; width: 236px; }
+    #apt{ left: 1301px; top: 358px; width: 88px; }
+    #bairro{ left: 1033px; top: 500px; width: 236px; }
+    #complemento{ left: 1033px; top: 628px; width: 236px; }
+
+    .dica{
+        left: 487px;
+        padding-left: 19px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .btn-cadastrar{
+        left: 877px;
+        top: 842px;
+    }
+
+    .entrar-logo{
+        position: absolute;
+        left: 50%;
+        top: 49px;
+        width: 224px;
+        height: auto;
+        transform: translateX(-50%);
+    }
+
+    .entrar-rotulo{
+        position: absolute;
+        left: 0;
+        width: 100%;
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .entrar-campo{
+        position: absolute;
+        left: 50%;
+        width: 325px;
+        height: 43px;
+        font-size: 22px;
+        transform: translateX(-50%);
+    }
+
+    .rotulo-email{ top: 372px; }
+    .campo-email{ top: 419px; }
+    .rotulo-senha{ top: 503px; }
+    .campo-senha{ top: 545px; }
+
+    .btn-entrar{
+        position: absolute;
+        left: calc(50% - 60px);
+        top: 644px;
+    }
+}
+
+@media (max-width: 1024px){
+    .pagina{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        padding: 16px 16px 40px;
+    }
+
+    .topo{
+        order: -1;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+
+    .logo-pequena{
+        margin-right: auto;
+    }
+
+    .logo-pequena img{
+        width: 92px;
+        margin: -24px 0 -24px -4px;
+    }
+
+    .topo-link{
+        position: relative;
+        padding: 0 2px 2px;
+        font-size: 16px;
+    }
+
+    .vistas{
+        position: relative;
+        width: 100%;
+    }
+
+    .vista{
+        position: relative;
+        width: 100%;
+    }
+
+    .pagina .vista.saindo{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .vista-cadastro .cartao,
+    .vista-cadastro .divisor{
+        display: none;
+    }
+
+    .seta{
+        display: block;
+        margin-bottom: 8px;
+        font-size: 28px;
+        line-height: 32px;
+    }
+
+    .seta-avancar{
+        margin-left: auto;
+    }
+
+    .form-cadastro{
+        display: flex;
+        flex-direction: column;
+        padding: 12px 18px 28px;
+        background-color: var(--card);
+        border: solid 2px var(--rosa);
+        border-radius: 24px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .rotulo{
+        margin-top: 14px;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .campo{
+        width: 100%;
+        height: 46px;
+        font-size: 18px;
+    }
+
+    .dica{
+        position: relative;
+        padding-left: 16px;
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .btn-cadastrar{
+        position: relative;
+        align-self: center;
+        margin-top: 26px;
+    }
+
+    .cartao-entrar{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 22px 18px 30px;
+        border-radius: 24px;
+    }
+
+    .entrar-logo{
+        width: 190px;
+        height: auto;
+        margin-bottom: 8px;
+    }
+
+    .form-entrar{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .entrar-rotulo{
+        margin-top: 14px;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .entrar-campo{
+        width: 100%;
+        max-width: 340px;
+        height: 46px;
+        font-size: 18px;
+    }
+
+    .btn-entrar{
+        position: relative;
+        margin-top: 26px;
+    }
+}

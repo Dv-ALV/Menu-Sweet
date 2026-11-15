@@ -1,0 +1,37 @@
+{
+  "conexao": {
+    "servidor": "localhost",
+    "porta": 3306,
+    "usuario": "root",
+    "senha": "",
+    "banco": "db_menusweet"
+  },
+  "importar": true,
+  "dados": {
+    "clientes": [
+      { "id": 1, "nome": "Carla Mendes", "email": "carla@email.com", "telefone": "(31) 99999-1111", "endereco": "Rua das Flores, 120 - Belo Horizonte" },
+      { "id": 2, "nome": "João Pereira", "email": "joao@email.com", "telefone": "(31) 98888-2222", "endereco": "Av. Brasil, 450 - Belo Horizonte" },
+      { "id": 3, "nome": "Marina Souza", "email": "marina@email.com", "telefone": "(31) 97777-3333", "endereco": "Rua Bahia, 88 - Belo Horizonte" }
+    ],
+    "assinantes": [
+      { "id": 1, "cliente_id": 1, "plano": "Café Semanal", "valor_mensal": 89.90, "data_inicio": "2026-09-01", "ativo": 1 },
+      { "id": 2, "cliente_id": 3, "plano": "Café Diário", "valor_mensal": 249.90, "data_inicio": "2026-10-15", "ativo": 1 }
+    ],
+    "entregadores": [
+      { "id": 1, "nome": "Rafael Lima", "telefone": "(31) 96666-4444", "veiculo": "Moto", "placa": "ABC1D23" },
+      { "id": 2, "nome": "Bruna Alves", "telefone": "(31) 95555-5555", "veiculo": "Bicicleta", "placa": "" }
+    ],
+    "estoque": [
+      { "id": 1, "produto": "Café Expresso 250g", "categoria": "Café", "quantidade": 120, "preco": 18.50 },
+      { "id": 2, "produto": "Cappuccino em pó 200g", "categoria": "Café", "quantidade": 60, "preco": 22.00 },
+      { "id": 3, "produto": "Pão de Queijo (10 un)", "categoria": "Salgado", "quantidade": 40, "preco": 15.00 },
+      { "id": 4, "produto": "Bolo de Cenoura (fatia)", "categoria": "Doce", "quantidade": 25, "preco": 9.50 }
+    ],
+    "pedidos": [
+      { "id": 1, "cliente_id": 1, "entregador_id": 1, "descricao": "2x Café Expresso 250g", "valor": 37.00, "status": "Entregue", "data_pedido": "2026-11-09 09:30:00" },
+      { "id": 2, "cliente_id": 2, "entregador_id": 2, "descricao": "1x Cappuccino + 1x Pão de Queijo", "valor": 37.00, "status": "Em rota", "data_pedido": "2026-11-10 10:15:00" },
+      { "id": 3, "cliente_id": 3, "entregador_id": 1, "descricao": "3x Bolo de Cenoura (fatia)", "valor": 28.50, "status": "Pendente", "data_pedido": "2026-11-10 11:00:00" },
+      { "id": 4, "cliente_id": 1, "entregador_id": 2, "descricao": "1x Café Expresso 250g", "valor": 18.50, "status": "Pendente", "data_pedido": "2026-11-10 11:20:00" }
+    ]
+  }
+}
