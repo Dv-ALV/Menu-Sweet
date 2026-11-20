@@ -1,6 +1,30 @@
 (function () {
     var raiz = document.documentElement;
 
+    var BAIXAR_AUTOMATICAMENTE = true;          
+    var NOME_ARQUIVO_EXPORT = "menusweet_export.json";
+    var CHAVE_EXPORT = "menusweetExport";       
+    var CIDADE_PADRAO = "Belo Horizonte";       
+    var ESTADO_PADRAO = "MG";
+
+    
+    var PRODUTOS_ID = {
+        "Expresso da casa": 1, "Latte da Biblioteca": 2, "Bolo de Morango": 3, "Croissant Premium": 4,
+        "Cappuccino Clássico": 5, "Mocha de Chocolate Meio Amargo": 6, "Macchiato Aveludado": 7,
+        "Bentô Cake": 8, "Picole de Sea Salt": 9, "Tartlet de Frutas Vermelhas": 10,
+        "Italian Cream de Maçã Verde": 11, "Milkshake Estelar de Baunilha": 12,
+        "Frapê de Frutas Silvestres": 13, "Soda de Lichia": 14, "Energetico": 15, "Suco Lata": 16,
+        "Refrigerante": 17, "Agua": 18, "O Sanduíche de Frango": 19, "Quiche Rústica": 20,
+        "Empadinha Cremosa de Palmito": 21, "Toast de Abacate e Ovo Pochê": 22
+    };
+    var KITS_ID = {
+        "Kit Encontro na Biblioteca": 1, "Kit Síndrome da Adolescência": 2,
+        "Kit O Banquete do Cozinheiro": 3, "Kit Flores e Aromas de Chidori": 4,
+        "Kit Equivalência de Bolso": 5, "Kit Manhã na Cidade": 6,
+        "Kit Pôr do Sol na Torre do Relógio": 7
+    };
+
+   
     function aplicarTema(tema) {
         raiz.setAttribute("data-tema", tema);
     }
@@ -49,53 +73,323 @@
         return el ? el.value : padrao;
     }
 
-    // Baixa um arquivo .json para ser importado pelo programa C# (botão IMPORTAR JSON)
-    function baixarJson(tipo, objeto) {
-        try {
-            var agora = new Date();
-            var p = function (n) { return (n < 10 ? "0" : "") + n; };
-            var carimbo = agora.getFullYear() + p(agora.getMonth() + 1) + p(agora.getDate()) + "-" +
-                          p(agora.getHours()) + p(agora.getMinutes()) + p(agora.getSeconds());
-            objeto.tipo = tipo;
-
-            var blob = new Blob([JSON.stringify(objeto, null, 2)], { type: "application/json" });
-            var url = URL.createObjectURL(blob);
-            var link = document.createElement("a");
-            link.href = url;
-            link.download = "menusweet-" + carimbo + "-" + tipo + ".json";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-        } catch (erro) {
-            console.error(erro);
-        }
-    }
-
-    function montarUsuarioJson(u, senha) {
-        return {
-            usuario: {
-                nome: u.nome || "",
-                email: u.email || "",
-                senha: senha || "",
-                telefone: u.telefone || "",
-                assinante: u.assinante === true
-            },
-            endereco: {
-                cep: u.cep || "",
-                num: u.num || "",
-                rua: u.rua || "",
-                apt: u.apt || "",
-                bairro: u.bairro || "",
-                complemento: u.complemento || ""
-            }
-        };
-    }
-
     if (lerLogado()) {
         raiz.setAttribute("data-logado", "1");
     }
 
+    
+    function novoExport() {
+        return {
+            importar: true,
+            geradoEm: null,
+            dados: {
+                Usuarios: [],
+                Endereco: [],
+                Plano_Assinatura: [],
+                Plano_Usuario: [],
+                Item_Assinatura: [],
+                Pedidos: [],
+                Item_pedido: []
+            }
+        };
+    }
+
+    function lerExport() {
+        try {
+            var d = JSON.parse(localStorage.getItem(CHAVE_EXPORT));
+            if (d && d.dados) {
+                var base = novoExport();
+                for (var tabela in base.dados) {
+                    if (!d.dados[tabela]) {
+                        d.dados[tabela] = [];
+                    }
+                }
+                return d;
+            }
+        } catch (erro) {}
+        return novoExport();
+    }
+
+    function salvarExport(exp) {
+        exp.geradoEm = agoraMySQL();
+        try {
+            localStorage.setItem(CHAVE_EXPORT, JSON.stringify(exp));
+        } catch (erro) {
+            console.error("Não foi possível guardar a exportação", erro);
+        }
+    }
+
+    function pad(n) {
+        return n < 10 ? "0" + n : "" + n;
+    }
+
+    
+    function agoraMySQL() {
+        var d = new Date();
+        return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + " " +
+            pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+    }
+
+    function proximoId(lista) {
+        var maior = 0;
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].id > maior) {
+                maior = lista[i].id;
+            }
+        }
+        return maior + 1;
+    }
+
+    function gerarUid() {
+        return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    }
+
+    function baixarJSON() {
+        var exp = lerExport();
+        exp.geradoEm = agoraMySQL();
+        var texto = JSON.stringify(exp, null, 2);
+        try {
+            var blob = new Blob([texto], { type: "application/json" });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = NOME_ARQUIVO_EXPORT;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        } catch (erro) {
+            console.error("Falha ao baixar o JSON", erro);
+        }
+    }
+
+    function baixarSeAutomatico() {
+        if (BAIXAR_AUTOMATICAMENTE) {
+            baixarJSON();
+        }
+    }
+
+    
+    function registrarUsuario(usuario, senha) {
+        if (!usuario || !usuario.email) {
+            console.warn("Exportação: usuário sem e-mail, ignorado.");
+            return null;
+        }
+
+        var exp = lerExport();
+        var lista = exp.dados.Usuarios;
+        var achado = null;
+
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].Email === usuario.email) {
+                achado = lista[i];
+                break;
+            }
+        }
+
+        if (!achado) {
+            achado = {
+                id: proximoId(lista),
+                Nome: usuario.nome || "",
+                Email: usuario.email,
+                Senha: senha || "",
+                CPF: null,
+                Telefone: usuario.telefone || null,
+                Cargo: "cliente",
+                data_criacao: agoraMySQL()
+            };
+            lista.push(achado);
+        } else {
+            if (usuario.nome) { achado.Nome = usuario.nome; }
+            if (usuario.telefone) { achado.Telefone = usuario.telefone; }
+            if (senha) { achado.Senha = senha; }
+        }
+
+        salvarExport(exp);
+        return achado.id;
+    }
+
+    
+    function registrarEndereco(idUsuario, usuario) {
+        if (!idUsuario || !usuario || !usuario.rua) {
+            return null;
+        }
+
+        var complemento = [];
+        if (usuario.apt) { complemento.push("Apt " + usuario.apt); }
+        if (usuario.complemento) { complemento.push(usuario.complemento); }
+
+        var novo = {
+            Rua: usuario.rua || "",
+            Numero: usuario.num || "",
+            Complemento: complemento.length ? complemento.join(" - ") : null,
+            Bairro: usuario.bairro || "",
+            Cidade: CIDADE_PADRAO,
+            Estado: ESTADO_PADRAO,
+            CEP: usuario.cep || ""
+        };
+
+        var exp = lerExport();
+        var lista = exp.dados.Endereco;
+        var existente = null;
+
+        for (var i = 0; i < lista.length; i++) {
+            var e = lista[i];
+            if (e.idUsuarios === idUsuario &&
+                e.Rua === novo.Rua && e.Numero === novo.Numero &&
+                e.Bairro === novo.Bairro && e.CEP === novo.CEP &&
+                (e.Complemento || null) === novo.Complemento) {
+                existente = e;
+                break;
+            }
+        }
+
+        for (var j = 0; j < lista.length; j++) {
+            if (lista[j].idUsuarios === idUsuario) {
+                lista[j].endereco_padrao = 0;
+            }
+        }
+
+        if (!existente) {
+            existente = {
+                id: proximoId(lista),
+                idUsuarios: idUsuario,
+                Rua: novo.Rua,
+                Numero: novo.Numero,
+                Complemento: novo.Complemento,
+                Bairro: novo.Bairro,
+                Cidade: novo.Cidade,
+                Estado: novo.Estado,
+                CEP: novo.CEP,
+                instrucao: null,
+                endereco_padrao: 1
+            };
+            lista.push(existente);
+        } else {
+            existente.endereco_padrao = 1;
+        }
+
+        salvarExport(exp);
+        return existente.id;
+    }
+
+    function registrarAssinatura(usuario) {
+        var idU = registrarUsuario(usuario);
+        var idE = registrarEndereco(idU, usuario);
+        if (!idU) {
+            return;
+        }
+
+        var exp = lerExport();
+
+        if (exp.dados.Plano_Assinatura.length === 0) {
+            exp.dados.Plano_Assinatura.push({
+                id: 1,
+                nome_plano: "Assinatura Mensal",
+                descricao_plano: "Assinatura Menu Sweet",
+                tempo_plano: "mensal",
+                desconto_assinante: 0,
+                preco_plano: 100.00,
+                atividade: 1
+            });
+        }
+
+        var jaTem = false;
+        for (var i = 0; i < exp.dados.Plano_Usuario.length; i++) {
+            var p = exp.dados.Plano_Usuario[i];
+            if (p.idUsuarios === idU && p.status === "ativo") {
+                p.idEndereco = idE;
+                jaTem = true;
+            }
+        }
+
+        if (!jaTem) {
+            exp.dados.Plano_Usuario.push({
+                id: proximoId(exp.dados.Plano_Usuario),
+                idUsuarios: idU,
+                idPlano_Assinatura: 1,
+                idEndereco: idE,
+                status: "ativo",
+                dia_entrega: null, 
+                dia_criacao_assinatura: agoraMySQL()
+            });
+        }
+
+        salvarExport(exp);
+    }
+
+    function registrarPedido(itens, usuario) {
+        var idU = registrarUsuario(usuario);
+        var idE = registrarEndereco(idU, usuario);
+        if (!idU) {
+            return null;
+        }
+
+        
+        var grupos = {};
+        var ordem = [];
+        itens.forEach(function (item) {
+            var nome = String(item.nome).trim();
+            if (!grupos[nome]) {
+                grupos[nome] = { nome: nome, preco: precoNumero(item.preco), qtd: 0 };
+                ordem.push(nome);
+            }
+            grupos[nome].qtd += 1;
+        });
+
+        var subtotal = 0;
+        ordem.forEach(function (n) {
+            subtotal += grupos[n].preco * grupos[n].qtd;
+        });
+        subtotal = Math.round(subtotal * 100) / 100;
+
+        var exp = lerExport();
+        var idPedido = proximoId(exp.dados.Pedidos);
+
+        exp.dados.Pedidos.push({
+            id: idPedido,
+            uid: gerarUid(), 
+            idUsuarios: idU,
+            idEndereco: idE,
+            status_pedido: "pendente",
+            subtotal_pedido: subtotal,
+            desconto_pedido: 0,
+            frete: 0,
+            total_pedido: subtotal,
+            data_pedido: agoraMySQL()
+        });
+
+        ordem.forEach(function (n) {
+            var g = grupos[n];
+            var ehKit = KITS_ID.hasOwnProperty(n);
+            var idCat = ehKit ? KITS_ID[n] : (PRODUTOS_ID.hasOwnProperty(n) ? PRODUTOS_ID[n] : null);
+
+            exp.dados.Item_pedido.push({
+                id: proximoId(exp.dados.Item_pedido),
+                idPedidos: idPedido,
+                tipo_item: ehKit ? "kit" : "produto",
+                idKIT: ehKit ? idCat : null,
+                idProdutos: ehKit ? null : idCat,
+                preco_pedido: g.preco,
+                quantidade_pedido: g.qtd,
+                nome_item: n 
+            });
+        });
+
+        salvarExport(exp);
+        return idPedido;
+    }
+
+    
+    window.MenuSweet = {
+        exportarJSON: baixarJSON,
+        verJSON: function () { return lerExport(); },
+        limparExportacao: function () {
+            try { localStorage.removeItem(CHAVE_EXPORT); } catch (erro) {}
+        }
+    };
+
+    
     function iniciarTema() {
         var botao = document.querySelector(".btn-modo");
 
@@ -226,13 +520,24 @@
         if (formulario) {
             formulario.addEventListener("submit", function (evento) {
                 evento.preventDefault();
+
+                
+                var emailPortao = valorDe("portao-email", "");
+                var existente = lerUsuario();
+                var usuario = existente && existente.email === emailPortao
+                    ? existente
+                    : { nome: emailPortao.split("@")[0], email: emailPortao };
+                try {
+                    localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+                } catch (erro) {}
+
                 marcarLogado();
                 portao.style.display = "none";
+                window.location.reload();
             });
         }
     }
 
-    
     function iniciarFormularios() {
         var formCadastro = document.querySelector(".form-cadastro");
         if (formCadastro) {
@@ -245,12 +550,20 @@
                     cep: valorDe("cep", ""),
                     rua: valorDe("rua", ""),
                     num: valorDe("num", ""),
+                    apt: valorDe("apt", ""),
                     bairro: valorDe("bairro", ""),
                     complemento: valorDe("complemento", "")
                 };
+               
+                var senha = valorDe("senha", "");
+
                 localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
                 marcarLogado();
-                baixarJson("usuario", montarUsuarioJson(usuario, valorDe("senha", "")));
+
+                var idU = registrarUsuario(usuario, senha);
+                registrarEndereco(idU, usuario);
+                baixarSeAutomatico();
+
                 alert("Cadastro realizado com sucesso!");
                 window.location.href = "Cardapioindex.html";
             });
@@ -287,7 +600,10 @@
                     localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
                 } catch (erro) {}
                 marcarLogado();
-                baixarJson("usuario", montarUsuarioJson(usuario, valorDe("senha", "")));
+
+                registrarAssinatura(usuario);
+                baixarSeAutomatico();
+
                 alert("Assinatura cadastrada com sucesso!");
                 window.location.href = "Assinanteindex.html";
             });
@@ -305,13 +621,16 @@
                 usuario.bairro = valorDe("bairro", "");
                 usuario.complemento = valorDe("complemento", "");
                 localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-                baixarJson("usuario", montarUsuarioJson(usuario, ""));
+
+                var idU = registrarUsuario(usuario);
+                registrarEndereco(idU, usuario);
+                baixarSeAutomatico();
+
                 alert("Endereço salvo!");
             });
         }
     }
 
-    
     function iniciarUsuario() {
         var userObj = lerUsuario();
         if (!lerLogado() || !userObj) {
@@ -373,7 +692,6 @@
         }
     }
 
-    
     function iniciarCardapio() {
         var botoesCardapio = document.querySelectorAll(".card-item");
 
@@ -415,7 +733,6 @@
         });
     }
 
-    
     function lerCarrinho() {
         try {
             return JSON.parse(localStorage.getItem("carrinhoProdutos")) || [];
@@ -463,6 +780,13 @@
                     return;
                 }
 
+                
+                if (!usuario.rua) {
+                    alert("Cadastre seu endereço no perfil para finalizar o pedido.");
+                    window.location.href = "Perfilindex.html";
+                    return;
+                }
+
                 var total = 0;
                 itens.forEach(function (item) {
                     total += precoNumero(item.preco);
@@ -481,18 +805,16 @@
                     endereco: enderecoTexto
                 });
 
-                baixarJson("pedido", {
-                    email: usuario.email || "",
-                    data: new Date().toISOString(),
-                    total: total,
-                    endereco: enderecoTexto,
-                    itens: itens.map(function (item) { return { nome: item.nome, preco: precoNumero(item.preco) }; })
-                });
-
                 localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+                
+                registrarPedido(itens, usuario);
+
                 localStorage.removeItem("carrinhoProdutos");
 
                 renderizarCarrinho();
+                baixarSeAutomatico();
+
                 alert("Pedido realizado com sucesso!");
                 window.location.href = "Perfilindex.html";
             });
@@ -538,7 +860,7 @@
             linha.appendChild(preco);
             lista.appendChild(linha);
 
-            totalGeral += parseFloat(prod.preco.replace("R$", "").replace(",", ".").trim()) || 0;
+            totalGeral += precoNumero(prod.preco);
         });
 
         var paragrafoTotal = document.querySelector(".pedido-total");
@@ -553,7 +875,6 @@
         }
     }
 
-    
     function soDigitos(v) {
         return v.replace(/\D/g, "");
     }
@@ -625,7 +946,6 @@
         });
     }
 
-    
     function iniciarPedidos() {
         var caixa = document.querySelector(".pedidos-lista");
         if (!caixa) {
@@ -707,5 +1027,4 @@
             raiz.setAttribute("data-logado", "1");
         }
     });
-})();
 })();
