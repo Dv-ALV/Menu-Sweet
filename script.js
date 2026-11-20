@@ -49,6 +49,49 @@
         return el ? el.value : padrao;
     }
 
+    // Baixa um arquivo .json para ser importado pelo programa C# (botão IMPORTAR JSON)
+    function baixarJson(tipo, objeto) {
+        try {
+            var agora = new Date();
+            var p = function (n) { return (n < 10 ? "0" : "") + n; };
+            var carimbo = agora.getFullYear() + p(agora.getMonth() + 1) + p(agora.getDate()) + "-" +
+                          p(agora.getHours()) + p(agora.getMinutes()) + p(agora.getSeconds());
+            objeto.tipo = tipo;
+
+            var blob = new Blob([JSON.stringify(objeto, null, 2)], { type: "application/json" });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
+            link.href = url;
+            link.download = "menusweet-" + carimbo + "-" + tipo + ".json";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        } catch (erro) {
+            console.error(erro);
+        }
+    }
+
+    function montarUsuarioJson(u, senha) {
+        return {
+            usuario: {
+                nome: u.nome || "",
+                email: u.email || "",
+                senha: senha || "",
+                telefone: u.telefone || "",
+                assinante: u.assinante === true
+            },
+            endereco: {
+                cep: u.cep || "",
+                num: u.num || "",
+                rua: u.rua || "",
+                apt: u.apt || "",
+                bairro: u.bairro || "",
+                complemento: u.complemento || ""
+            }
+        };
+    }
+
     if (lerLogado()) {
         raiz.setAttribute("data-logado", "1");
     }
@@ -207,6 +250,7 @@
                 };
                 localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
                 marcarLogado();
+                baixarJson("usuario", montarUsuarioJson(usuario, valorDe("senha", "")));
                 alert("Cadastro realizado com sucesso!");
                 window.location.href = "Cardapioindex.html";
             });
@@ -243,6 +287,7 @@
                     localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
                 } catch (erro) {}
                 marcarLogado();
+                baixarJson("usuario", montarUsuarioJson(usuario, valorDe("senha", "")));
                 alert("Assinatura cadastrada com sucesso!");
                 window.location.href = "Assinanteindex.html";
             });
@@ -260,6 +305,7 @@
                 usuario.bairro = valorDe("bairro", "");
                 usuario.complemento = valorDe("complemento", "");
                 localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+                baixarJson("usuario", montarUsuarioJson(usuario, ""));
                 alert("Endereço salvo!");
             });
         }
@@ -433,6 +479,14 @@
                     itens: itens,
                     total: total,
                     endereco: enderecoTexto
+                });
+
+                baixarJson("pedido", {
+                    email: usuario.email || "",
+                    data: new Date().toISOString(),
+                    total: total,
+                    endereco: enderecoTexto,
+                    itens: itens.map(function (item) { return { nome: item.nome, preco: precoNumero(item.preco) }; })
                 });
 
                 localStorage.setItem("pedidos", JSON.stringify(pedidos));
@@ -653,4 +707,5 @@
             raiz.setAttribute("data-logado", "1");
         }
     });
+})();
 })();
